@@ -1,58 +1,130 @@
 <!DOCTYPE html>
 <html lang="ar">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Digital Audio Exhibit</title>
+<meta charset="UTF-8">
+<title>Proposed Audio-Based Digital Magazine</title>
 
-    <style>
-        body {
-            margin: 0;
-            background: linear-gradient(135deg, #000814, #001d3d);
-            color: white;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+<style>
+body {
+    margin: 0;
+    background: #0f172a;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
+}
 
-        .container {
-            text-align: center;
-            background: rgba(0, 0, 0, 0.4);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 0 30px rgba(0, 140, 255, 0.3);
-        }
+.audio-container {
+    position: relative;
+    width: 500px;
+    padding: 30px;
+    background: #020617;
+    border-radius: 15px;
+    text-align: center;
+}
 
-        h1 {
-            margin-bottom: 10px;
-        }
+/* العنوان */
+h2 {
+    margin-bottom: 15px;
+    color: #38bdf8;
+}
 
-        p {
-            font-size: 14px;
-            opacity: 0.8;
-            margin-bottom: 20px;
-        }
+/* النص */
+p {
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    z-index: 2;
+    position: relative;
+}
 
-        audio {
-            width: 280px;
-        }
-    </style>
+/* مشغل الصوت */
+audio {
+    width: 100%;
+    z-index: 2;
+    position: relative;
+}
+
+/* الموجات */
+.waves {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+    opacity: 0.6;
+}
+
+/* شكل الموجة */
+.waves span {
+    width: 6px;
+    height: 10px;
+    background-color: #38bdf8;
+    border-radius: 4px;
+    animation: wave 1.5s infinite ease-in-out;
+    animation-play-state: paused;
+}
+
+/* تأخير الحركة */
+.waves span:nth-child(2) { animation-delay: 0.15s; }
+.waves span:nth-child(3) { animation-delay: 0.3s; }
+.waves span:nth-child(4) { animation-delay: 0.45s; }
+.waves span:nth-child(5) { animation-delay: 0.6s; }
+
+/* حركة هادئة */
+@keyframes wave {
+    0% { height: 8px; }
+    50% { height: 35px; }
+    100% { height: 8px; }
+}
+</style>
 </head>
 
 <body>
 
-    <div class="container">
-        <h1>Digital Audio Exhibit</h1>
-        <p>وثيقة صوتية رقمية ضمن مشروع النشر الصوتي</p>
+<div class="audio-container">
 
-        <audio controls>
-            <source src="audio.mp3" type="audio/mpeg">
-            المتصفح لا يدعم تشغيل الصوت
-        </audio>
+    <h2>Proposed Audio-Based Digital Magazine</h2>
+
+    <p>
+        يقدّم هذا النموذج مثالًا تطبيقيًا لمجلة رقمية صوتية تعتمد على المحتوى السمعي
+        بوصفه وسيلة رئيسية لنقل المعرفة في البيئة الرقمية المعاصرة.
+    </p>
+
+    <audio id="audio" controls>
+        <source src="audio.mp3" type="audio/mpeg">
+        المتصفح لا يدعم تشغيل الصوت
+    </audio>
+
+    <div class="waves" id="waves">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
 
-</body>
+</div>
 
+<script>
+const audio = document.getElementById("audio");
+const waves = document.querySelectorAll(".waves span");
+
+audio.addEventListener("play", () => {
+    waves.forEach(w => w.style.animationPlayState = "running");
+});
+
+audio.addEventListener("pause", () => {
+    waves.forEach(w => w.style.animationPlayState = "paused");
+});
+
+audio.addEventListener("ended", () => {
+    waves.forEach(w => w.style.animationPlayState = "paused");
+});
+</script>
+
+</body>
 </html>
